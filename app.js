@@ -1,6 +1,8 @@
 // El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
 let amigos = [];
-
+let listaNumerosSorteados = [];
+let totalItems = 0;
+let numeroSorteado = 0;
 
 function agregarAmigo() {
     if (document.getElementById("amigo").value == "") {
@@ -8,18 +10,55 @@ function agregarAmigo() {
     } else {
         let newName = document.getElementById("amigo").value
         amigos.push(newName);
-        //call listar participantes
-        console.log(amigos)
+        totalItems++;
         listarAmigos ();
         document.getElementById("amigo").value = '';
-    }
-    
+        
+    };
 }
 
 function listarAmigos(){
     document.getElementById("listaAmigos").innerHTML = "";
-    let totalItems = amigos.length;
-    for (i=0; i < totalItems; i++) {
+    //totalItems = amigos.length;
+    for (let i=0; i < totalItems; i++) {
         document.getElementById("listaAmigos").innerHTML += `<ul>${amigos[i]}</ul>`;
+    };
+}
+
+
+function comprobacionParticipantes() {
+    //totalItems = amigos.length;
+    //console.log ("total items " + totalItems);
+    if (amigos.length < 2) {
+        alert("No hay suficientes amigos participantes!");
+    } else {
+        //console.log("Suficientes participantes, iniciando sorteo");
+        for (let y = 0; y < totalItems; y++) {
+            //console.log("sorteo de amigos");
+            sortearAmigos(y);
+        };
+    };
+    printResult();
+}
+
+function sortearAmigos(posicionAmigo) {
+    numeroSorteado = Math.floor(Math.random()*totalItems);
+    if (numeroSorteado == posicionAmigo || listaNumerosSorteados.includes(numeroSorteado)) {
+        //console.log(numeroSorteado + "Reintentar sorteo");
+        sortearAmigos(posicionAmigo);
+    } else {
+        listaNumerosSorteados.push(numeroSorteado);
+        //console.log(listaNumerosSorteados)
+    };
+}
+
+
+function printResult(){
+    //console.log(totalItems);
+    //console.log(amigos);
+    //console.log(listaNumerosSorteados);
+    for (let z=0; z < totalItems; z++){
+        //document.getElementById("resultado").innerHTML = "";
+        document.getElementById("resultado").innerHTML += `<ul>${amigos[z]} regala a ${amigos[listaNumerosSorteados[z]]}</ul>`;
     }
 }
