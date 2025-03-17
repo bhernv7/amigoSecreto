@@ -29,6 +29,7 @@ function listarAmigos(){
 function comprobacionParticipantes() {
     //totalItems = amigos.length;
     //console.log ("total items " + totalItems);
+    document.getElementById("resultado").innerHTML = "";
     if (amigos.length < 2) {
         alert("No hay suficientes amigos participantes!");
     } else {
@@ -42,23 +43,26 @@ function comprobacionParticipantes() {
 }
 
 function sortearAmigos(posicionAmigo) {
-    numeroSorteado = Math.floor(Math.random()*totalItems);
-    if (numeroSorteado == posicionAmigo || listaNumerosSorteados.includes(numeroSorteado)) {
-        //console.log(numeroSorteado + "Reintentar sorteo");
-        sortearAmigos(posicionAmigo);
-    } else {
-        listaNumerosSorteados.push(numeroSorteado);
-        //console.log(listaNumerosSorteados)
-    };
+    console.log(posicionAmigo)
+    if (listaNumerosSorteados.length < totalItems){
+        numeroSorteado = Math.floor(Math.random()*totalItems);
+        if (numeroSorteado == posicionAmigo || listaNumerosSorteados.includes(numeroSorteado)) {
+            console.log(numeroSorteado + "Reintentar sorteo");
+            return sortearAmigos(posicionAmigo);
+        } else {
+            listaNumerosSorteados.push(numeroSorteado);
+            //console.log(listaNumerosSorteados)
+        };
+    }
 }
 
 
 function printResult(){
-    //console.log(totalItems);
-    //console.log(amigos);
-    //console.log(listaNumerosSorteados);
+    console.log(totalItems);
+    console.log(amigos);
+    console.log(listaNumerosSorteados);
     for (let z=0; z < totalItems; z++){
-        //document.getElementById("resultado").innerHTML = "";
+        
         document.getElementById("resultado").innerHTML += `<ul>${amigos[z]} regala a ${amigos[listaNumerosSorteados[z]]}</ul>`;
     }
 }
